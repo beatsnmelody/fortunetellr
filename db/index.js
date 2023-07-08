@@ -5,5 +5,6 @@ module.exports = {
     ...require("./tarot"), // etc
     ...require("./zodiac"), // etc
     ...require("./pendulum"), // etc
+    ...require("./aura"), // etc
     ...require("./comments"), // etc
   };
