@@ -5,6 +5,7 @@ async function dropTables() {
       console.log("Dropping All Tables...");
   
       await client.query(`
+      DROP TABLE IF EXISTS pendulum;
       DROP TABLE IF EXISTS users;
       `);
   
@@ -28,6 +29,12 @@ async function dropTables() {
         username VARCHAR(255) UNIQUE NOT NULL,
         password VARCHAR(255) NOT NULL,
         "isAdmin" boolean NOT NULL
+      );
+
+      CREATE TABLE pendulum (
+        id SERIAL PRIMARY KEY,
+        "pendulumImage" TEXT NOT NULL,
+        answer TEXT NOT NULL
       );
   
     `);
@@ -59,11 +66,36 @@ async function dropTables() {
     }
   }
 
+  async function createInitialPendulumAnswers() {
+    console.log("Starting to create pendulum answers...");
+    try {
+      const panswersToCreate = [
+        { 
+          pendulumImage: "https://dribbble.com/shots/6268606-Pendulum/attachments/6268606-Pendulum?mode=media",
+          answer: "Yes" 
+        },
+        { pendulumImage: "https://gifer.com/en/gifs/pendulum",
+        answer: "Maybe" },
+        { pendulumImage: "https://gfycat.com/impossiblesillyiberianemeraldlizard",
+        answer: "No" },
+      ];
+      const panswers = await Promise.all(panswersToCreate.map(pcreateAnswer));
+  
+      console.log("Pendulum Answers created:");
+      console.log(panswers);
+      console.log("Finished creating Pendulum answers!");
+    } catch (error) {
+      console.error("Error creating Pendulum answers!");
+      throw error;
+    }
+  }
+
   async function rebuildDB() {
     try {
       await dropTables();
       await createTables();
       await createInitialUsers();
+      await createInitialPendulumAnswers();
     } catch (error) {
       console.log("Error during rebuildDB");
       throw error;
