@@ -106,5 +106,6 @@ async function dropTables() {
     rebuildDB,
     dropTables,
     createTables,
-    createInitialUsers
+    createInitialUsers,
+    createInitialPendulumAnswers
   };

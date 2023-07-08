@@ -4,6 +4,7 @@ import NavBar from "./NavBar";
 import Register from "./Register";
 import Login from "./Login";
 import Home from "./Home";
+import Pendulum from "./Pendulum";
 
 // const App = () => {
 //  return (
@@ -41,6 +42,7 @@ const App = () => {
             setIsLoggedIn={setIsLoggedIn}
             />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/pendulum" element={<Pendulum />} />
             <Route path="/" element={<Home 
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}

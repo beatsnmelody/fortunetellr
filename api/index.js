@@ -45,3 +45,16 @@ apiRouter.use(async (req, res, next) => {
 // ROUTER: /api/users
 const usersRouter = require("./users");
 apiRouter.use("/users", usersRouter);
+
+const pendulumRouter = require("./pendulum");
+apiRouter.use("/pendulum", pendulumRouter);
+
+apiRouter.use((error, req, res, next) => {
+  res.send({
+    error: error.name,
+    name: error.name,
+    message: error.message,
+  });
+});
+
+module.exports = apiRouter;

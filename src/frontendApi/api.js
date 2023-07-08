@@ -45,3 +45,29 @@ export const fetchUser = async (token) => {
   const json = await res.json();
   return json;
 };
+
+export const fetchAllPendulumAnswers = async () => {
+  const res = await fetch(`${APIURL}/pendulum`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const json = await res.json();
+  return json;
+};
+
+export const createPendulumAnswer = async (pendulumImage, answer) => {
+  const res = await fetch(`${APIURL}/products`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      pendulumImage: `${pendulumImage}`,
+      answer: `${answer}`,
+    }),
+  });
+  const json = await res.json();
+  return json;
+};
