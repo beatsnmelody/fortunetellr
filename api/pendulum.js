@@ -1,9 +1,9 @@
 const express = require("express");
 const pendulumRouter = express.Router();
 const {
-    createPendulumAnswer,
+    getAllPendulumAnswers,
     getPendulumAnswerById,
-    getAllPendulumAnswers
+    createPendulumAnswer
 } = require("../db");
 const { requireAdmin } = require("./utils");
 

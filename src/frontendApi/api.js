@@ -57,7 +57,7 @@ export const fetchAllPendulumAnswers = async () => {
 };
 
 export const createPendulumAnswer = async (pendulumImage, answer) => {
-  const res = await fetch(`${APIURL}/products`, {
+  const res = await fetch(`${APIURL}/pendulum`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
