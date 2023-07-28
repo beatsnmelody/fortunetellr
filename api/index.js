@@ -3,10 +3,10 @@ const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 const { getUserById } = require("../db/users");
 
-apiRouter.get('/health', (req, res, next) => {
+apiRouter.get("/health", async (req, res, next) => {
   try {
     res.send({
-      healthy: true,
+      message: "All is well",
     });
   } catch (error) {
     next(error);
@@ -47,6 +47,7 @@ const usersRouter = require("./users");
 apiRouter.use("/users", usersRouter);
 
 const pendulumRouter = require("./pendulum");
+const { Router } = require('express');
 apiRouter.use("/pendulum", pendulumRouter);
 
 apiRouter.use((error, req, res, next) => {
@@ -56,5 +57,7 @@ apiRouter.use((error, req, res, next) => {
     message: error.message,
   });
 });
+
+apiRouter.use("/api", Router);
 
 module.exports = apiRouter;

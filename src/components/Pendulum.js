@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { fetchAllPendulumAnswers } from "../frontendApi/api";
+import ReactDOM from "react-dom";
+import { fetchAllPendulumAnswers, fetchPendulumAnswerById } from "../frontendApi/api";
+ 
 
 const Pendulum = (props) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [pendulumAnswers, setPendulumAnswers] = useState([]);
-    const [pendulumGenerator, setPendulumGenerator] = useState([]);
+    const [activePendulumAnswer, setActivePendulumAnswer] = useState([]);
+    const [onePendulumAnswer, setOnePendulumAnswer] = useState([]);
+    // const [randomPendulumAnswer, setRandomPendulumAnswer] = useState ([]);
 
     useEffect(() => {
         if (props.isLoggedIn) {
@@ -18,15 +22,31 @@ const Pendulum = (props) => {
             setPendulumAnswers(allPendulumAnswers);
         };
         fetchPendulumAnswers();
+
     }, []);
 
     console.log(pendulumAnswers);
 
     useEffect(() => {
-        document.title = `THE GREAT PENDULUM ${pendulumGenerator}`
+        const fetchPendulumAnswer = async () => {
+            const onePendulumAnswer = await fetchPendulumAnswerById();
+            setOnePendulumAnswer(onePendulumAnswer);
+        }
+        fetchPendulumAnswer();
+    }, []);
+
+
+    function randomPendulumAnswer () {
+        const len = allPendulumAnswers.length
+        setActivePendulumAnswer(Math.floor(Math.random() * len))
+    };
+
+
+    useEffect(() => {
+        document.title = `THE GREAT PENDULUM`
     })
 
-    
+
 
     return (
         <div>
@@ -36,7 +56,28 @@ const Pendulum = (props) => {
             <h2 className="bdy">
                 Disclaimer: The pendulum will only respond with yes, no, or maybe
             </h2>
-        </div>);
+            <div>{onePendulumAnswer[activePendulumAnswer]}
+                <div className="pendulumAnswerComponents">
+                    {onePendulumAnswer.map((pendulumAnswer) => (
+                        <div
+                            key={pendulumAnswer.id}
+                            className="pendulumComponent"
+                        >
+
+                            <h1 className="pendulumComponent">
+                                {pendulumComponent.answer}
+                            </h1>
+
+                            <img src={pendulumComponent.pendulumImage} width="300px" height="300px">
+                            </img>
+                        </div>
+                    ))};
+                    <button onClick={() => randomPendulumAnswer(pendulumAnswers.pendulumImage, pendulumAnswers.answer)}>Get Your Answer</button>
+                </div>
+            </div>
+        </div>
+    );
+
 };
 
 export default Pendulum;

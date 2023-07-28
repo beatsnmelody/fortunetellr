@@ -1,7 +1,7 @@
-const APIURL = 'https://localhost:5432/fortunetellr';
+const APIURL = 'http://localhost:4000/api';
 const token = localStorage.getItem("token");
 //POST register user
-export const fetchRegister = async (username, email, password, phoneNumber) => {
+export const fetchRegister = async (username, password) => {
   const res = await fetch(`${APIURL}/users/register`, {
     method: "POST",
     headers: {
@@ -53,6 +53,16 @@ export const fetchAllPendulumAnswers = async () => {
     },
   });
   const json = await res.json();
+  return json;
+};
+
+export const fetchPendulumAnswerById = async () => {
+  const res = await fetch(`${APIURL}/pendulum`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const json = res.json();
   return json;
 };
 

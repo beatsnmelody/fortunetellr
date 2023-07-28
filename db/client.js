@@ -1,10 +1,24 @@
-const { Pool } = require('pg');
+// Connect to DB
+const { Client } = require('pg');
 
-const connectionString = process.env.DATABASE_URL || 'https://localhost:5432/fortunetellr';
+// change the DB_NAME string to whatever your group decides on
+const DB_NAME = 'fortunetellr';
 
-const client = new Pool({
-  connectionString,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined,
-});
+const DB_URL =
+  process.env.DATABASE_URL || `https://localhost:5432/fortunetellr`;
+
+// github actions client config
+if (process.env.CI) {
+  client = new Client({
+    host: 'localhost',
+    port: 5432,
+    user: 'postgres',
+    password: 'postgres',
+    database: 'postgres',
+  });
+} else {
+  // local / heroku client config
+  client = new Client(DB_URL);
+}
 
 module.exports = client;
